@@ -1,37 +1,43 @@
 package com.test_app.mvp_bigin
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.test_app.mvp_bigin.databinding.ActivityMainBinding
-import com.test_app.mvp_bigin.presentation.Presenter
+import com.test_app.mvp_bigin.navigation.AndroidScreens
+import com.test_app.mvp_bigin.presentation.MainPresenter
+import com.test_app.mvp_bigin.ui.BackButtonPressed
 import com.test_app.mvp_bigin.views.MainView
-
-class MainActivity : AppCompatActivity(), MainView {
+import moxy.MvpAppCompatActivity
+import moxy.ktx.moxyPresenter
+//For creating an instance of moxyPresenter need to MainActivity instanced of MvpAppCompatActivity()
+class MainActivity : MvpAppCompatActivity(), MainView {
     private var binding : ActivityMainBinding ? = null
-    private val presenter = Presenter(this)
+    private val navigator = AppNavigator(this, R.id.container)
+    private val mainPresenter by moxyPresenter{MainPresenter(App.instance.router, AndroidScreens)}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        initView()
     }
 
-    private fun initView() {
-        binding?.btnCounter1?.setOnClickListener{presenter.firstBtnClicked()}
-        binding?.btnCounter2?.setOnClickListener{presenter.secondBtnClicked()}
-        binding?.btnCounter3?.setOnClickListener{presenter.thirdBtnClicked()}
+    override fun onResumeFragments() {
+      super.onResumeFragments()
+      App.instance.navigatorHolder.setNavigator(navigator)
     }
 
-    override fun getFirstBtnValue(value: Int) {
-        binding?.btnCounter1?.text  = value.toString()
+    override fun onPause() {
+        super.onPause()
+        App.instance.navigatorHolder.removeNavigator()
     }
 
-    override fun getSecondBtnValue(value: Int) {
-        binding?.btnCounter2?.text  = value.toString()
-
+    override fun onBackPressed() {
+        supportFragmentManager.fragments.forEach {
+            if(it is BackButtonPressed && it.backButtonPressed()){
+                return
+            }
+            mainPresenter.backClicked()
+        }
     }
 
-    override fun getThirdBtnValue(value: Int) {
-        binding?.btnCounter3?.text  = value.toString()
-    }
 }

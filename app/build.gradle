@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -36,6 +37,15 @@ android {
 }
 
 dependencies {
+    //moxy
+    implementation "com.github.moxy-community:moxy-ktx:2.2.2"
+    implementation "com.github.moxy-community:moxy:2.2.2"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt "com.github.moxy-community:moxy-compiler:2.2.2"
+    implementation "com.github.moxy-community:moxy-androidx:2.1.2"
+    //Cicerone
+    implementation 'com.github.terrakok:cicerone:6.6'
+
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'

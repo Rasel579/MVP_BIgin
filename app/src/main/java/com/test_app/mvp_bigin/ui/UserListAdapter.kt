@@ -7,13 +7,13 @@ import com.test_app.mvp_bigin.databinding.ItemUserLayoutBinding
 import com.test_app.mvp_bigin.presentation.UserItemListPresenter
 import com.test_app.mvp_bigin.views.UserItemView
 
-class UserListAdapter(val presenter : UserItemListPresenter) :
+class UserListAdapter(private val presenter : UserItemListPresenter) :
     RecyclerView.Adapter<UserListAdapter.UserItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserItemViewHolder =
         UserItemViewHolder(ItemUserLayoutBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)).apply {
                 itemView.setOnClickListener {
-                    presenter.itemClickedListener()?.invoke(this)
+                    presenter.itemClickedListener?.invoke(this)
                 }
         }
 
@@ -24,10 +24,10 @@ class UserListAdapter(val presenter : UserItemListPresenter) :
 
     override fun getItemCount(): Int = presenter.getCount()
 
-    inner class UserItemViewHolder(binding: ItemUserLayoutBinding) :
+    inner class UserItemViewHolder(val binding: ItemUserLayoutBinding) :
         RecyclerView.ViewHolder(binding.root), UserItemView{
         override fun setLogin(login: String) {
-            TODO("Not yet implemented")
+            binding.userLogin.text = login
         }
 
         override var pos = -1
