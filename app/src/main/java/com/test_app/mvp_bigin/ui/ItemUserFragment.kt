@@ -15,7 +15,7 @@ import moxy.ktx.moxyPresenter
 
 class ItemUserFragment(val pos: Int) : MvpAppCompatFragment(), ItemUserView {
     var binding : FragmentItemUserBinding? = null
-    private val itemUserPresenter by moxyPresenter{ ItemUserPresenter(GitHubRepo(), App.instance.router) }
+    private val itemUserPresenter by moxyPresenter{ ItemUserPresenter(GitHubRepo()) }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
