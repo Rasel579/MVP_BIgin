@@ -3,13 +3,17 @@ package com.test_app.mvp_bigin.presentation
 import com.github.terrakok.cicerone.Router
 import com.test_app.mvp_bigin.model.GitHubRepo
 import com.test_app.mvp_bigin.model.GithubUser
-import com.test_app.mvp_bigin.navigation.AndroidScreens
+import com.test_app.mvp_bigin.navigation.UserScreen
 import com.test_app.mvp_bigin.views.UserItemView
 import com.test_app.mvp_bigin.views.UsersView
 import moxy.MvpPresenter
-class UsersPresenter(private val model : GitHubRepo, val router: Router, val screens : AndroidScreens) : MvpPresenter<UsersView>() {
-    //создаем презентера для adapter
-    class UserListPresenter : UserItemListPresenter{
+
+class UsersPresenter(private val model: GitHubRepo, private val router: Router) :
+    MvpPresenter<UsersView>() {
+    /**
+     * создаем презентера для adapter
+     * **/
+    class UserListPresenter : UserItemListPresenter {
         val users = mutableListOf<GithubUser>()
         override var itemClickedListener: ((UserItemView) -> Unit)? = null
 
@@ -18,22 +22,24 @@ class UsersPresenter(private val model : GitHubRepo, val router: Router, val scr
             view.setLogin(user.login)
 
         }
-        override fun getCount(): Int  = users.size
+
+        override fun getCount(): Int = users.size
     }
+
     val userListPresenter = UserListPresenter()
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
         loadData()
-        userListPresenter.itemClickedListener = { userItemView ->
-          router.navigateTo(screens.itemUser(userItemView.pos))
-        }
     }
 
-     fun loadData() {
+    private fun loadData() {
         val users = model.getUsers()
         userListPresenter.users.addAll(users)
         viewState.updateUsersList()
+        userListPresenter.itemClickedListener = { userItemView ->
+            router.navigateTo(UserScreen(users[userItemView.pos]).create())
+        }
     }
 
     fun backPressed(): Boolean {

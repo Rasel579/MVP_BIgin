@@ -1,16 +1,17 @@
 package com.test_app.mvp_bigin.presentation
 
 import com.github.terrakok.cicerone.Router
-import com.test_app.mvp_bigin.navigation.IScreens
+import com.test_app.mvp_bigin.navigation.UsersScreen
 import com.test_app.mvp_bigin.views.MainView
 import moxy.MvpPresenter
 
-class MainPresenter(val router: Router, val screens : IScreens) : MvpPresenter<MainView>() {
+class MainPresenter(
+    private val router: Router) :
+    MvpPresenter<MainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        router.replaceScreen(screens.users())
+        router.newRootScreen(UsersScreen.create())
     }
-    fun backClicked(){
-        router.exit()
-    }
+
+    fun back() = router.exit()
 }
