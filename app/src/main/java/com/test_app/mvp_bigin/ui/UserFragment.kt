@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.test_app.mvp_bigin.databinding.FragmentItemUserBinding
 import com.test_app.mvp_bigin.model.GitHubRepo
@@ -38,6 +39,15 @@ class UserFragment : MvpAppCompatFragment(), UserView {
 
     override fun showUser(githubUser: GithubUser) {
         binding?.userItemLogin?.text = githubUser.login
+    }
+
+    override fun showError(error: Throwable) {
+        Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        binding = null
+        super.onDestroy()
     }
 
 }

@@ -7,6 +7,7 @@ import com.test_app.mvp_bigin.App.Navigation.router
 import com.test_app.mvp_bigin.databinding.ActivityMainBinding
 import com.test_app.mvp_bigin.presentation.MainPresenter
 import com.test_app.mvp_bigin.ui.BackButtonPressed
+import com.test_app.mvp_bigin.utils.Creation
 import com.test_app.mvp_bigin.views.MainView
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
@@ -23,6 +24,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        val creation = Creation()
+        creation.exec()
     }
 
     override fun onResumeFragments() {

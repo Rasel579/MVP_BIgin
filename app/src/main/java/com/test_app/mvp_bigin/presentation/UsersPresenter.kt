@@ -6,10 +6,14 @@ import com.test_app.mvp_bigin.model.GithubUser
 import com.test_app.mvp_bigin.navigation.UserScreen
 import com.test_app.mvp_bigin.views.UserItemView
 import com.test_app.mvp_bigin.views.UsersView
+import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
 
-class UsersPresenter(private val model: GitHubRepo, private val router: Router) :
+class UsersPresenter(private val repo: GitHubRepo, private val router: Router) :
     MvpPresenter<UsersView>() {
+    private var users = mutableListOf<GithubUser>()
+    private var disposable: Disposable? = null
+
     /**
      * создаем презентера для adapter
      * **/
@@ -34,8 +38,13 @@ class UsersPresenter(private val model: GitHubRepo, private val router: Router) 
     }
 
     private fun loadData() {
-        val users = model.getUsers()
-        userListPresenter.users.addAll(users)
+        disposable = repo.getUsers()
+            .subscribe(
+                users::add,
+                viewState::showError
+            )
+        userListPresenter.users
+            .addAll(users)
         viewState.updateUsersList()
         userListPresenter.itemClickedListener = { userItemView ->
             router.navigateTo(UserScreen(users[userItemView.pos]).create())
@@ -45,6 +54,11 @@ class UsersPresenter(private val model: GitHubRepo, private val router: Router) 
     fun backPressed(): Boolean {
         router.exit()
         return true
+    }
+
+    override fun onDestroy() {
+        disposable = null
+        super.onDestroy()
     }
 
 }

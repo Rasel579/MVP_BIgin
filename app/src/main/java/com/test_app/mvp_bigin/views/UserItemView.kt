@@ -5,5 +5,5 @@ import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface UserItemView : ItemView {
-    fun setLogin(login : String)
+    fun setLogin(login: String)
 }

@@ -6,7 +6,8 @@ import com.test_app.mvp_bigin.views.MainView
 import moxy.MvpPresenter
 
 class MainPresenter(
-    private val router: Router) :
+    private val router: Router
+) :
     MvpPresenter<MainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

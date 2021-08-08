@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test_app.mvp_bigin.App.Navigation.router
 import com.test_app.mvp_bigin.databinding.FragmentUsersListBinding
@@ -42,6 +43,10 @@ class UsersListFragment : MvpAppCompatFragment(), UsersView, BackButtonPressed {
 
     override fun backPressed() {
         userPresenter.backPressed()
+    }
+
+    override fun showError(e: Throwable) {
+        Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
     }
 
 
