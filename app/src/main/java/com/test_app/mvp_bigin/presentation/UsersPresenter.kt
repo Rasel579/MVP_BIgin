@@ -38,12 +38,14 @@ class UsersPresenter(private val repo: GitHubRepo, private val router: Router) :
     }
 
     private fun loadData() {
-        disposable = repo.getUsers()
+        disposable = repo
+            .getUsers()
             .subscribe(
                 users::add,
                 viewState::showError
             )
-        userListPresenter.users
+        userListPresenter
+            .users
             .addAll(users)
         viewState.updateUsersList()
         userListPresenter.itemClickedListener = { userItemView ->
