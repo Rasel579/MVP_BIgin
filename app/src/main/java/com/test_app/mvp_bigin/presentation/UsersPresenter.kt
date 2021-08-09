@@ -8,6 +8,7 @@ import com.test_app.mvp_bigin.views.UserItemView
 import com.test_app.mvp_bigin.views.UsersView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.kotlin.plusAssign
 import moxy.MvpPresenter
 
 class UsersPresenter(private val repo: GitHubRepo, private val router: Router) :
@@ -39,12 +40,12 @@ class UsersPresenter(private val repo: GitHubRepo, private val router: Router) :
     }
 
     private fun loadData() {
-        disposable.add(repo
+        disposable += repo
             .getUsers()
             .subscribe(
                 users::addAll,
                 viewState::showError
-            ))
+            )
         userListPresenter
             .users
             .addAll(users)
