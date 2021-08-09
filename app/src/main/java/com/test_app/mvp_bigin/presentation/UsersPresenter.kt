@@ -6,13 +6,14 @@ import com.test_app.mvp_bigin.model.GithubUser
 import com.test_app.mvp_bigin.navigation.UserScreen
 import com.test_app.mvp_bigin.views.UserItemView
 import com.test_app.mvp_bigin.views.UsersView
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
 
 class UsersPresenter(private val repo: GitHubRepo, private val router: Router) :
     MvpPresenter<UsersView>() {
     private var users = mutableListOf<GithubUser>()
-    private var disposable: Disposable? = null
+    private var disposable = CompositeDisposable()
 
     /**
      * создаем презентера для adapter
@@ -38,12 +39,12 @@ class UsersPresenter(private val repo: GitHubRepo, private val router: Router) :
     }
 
     private fun loadData() {
-        disposable = repo
+        disposable.add(repo
             .getUsers()
             .subscribe(
-                users::add,
+                users::addAll,
                 viewState::showError
-            )
+            ))
         userListPresenter
             .users
             .addAll(users)
@@ -59,8 +60,7 @@ class UsersPresenter(private val repo: GitHubRepo, private val router: Router) :
     }
 
     override fun onDestroy() {
-        disposable = null
-        super.onDestroy()
+        disposable.clear()
     }
 
 }

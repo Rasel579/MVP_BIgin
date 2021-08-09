@@ -2,26 +2,27 @@ package com.test_app.mvp_bigin.presentation
 
 import com.test_app.mvp_bigin.model.GitHubRepo
 import com.test_app.mvp_bigin.views.UserView
-import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.plusAssign
 import moxy.MvpPresenter
 
 class UserPresenter(
     private val userLogin: String,
     private val gitHubRepo: GitHubRepo
 ) : MvpPresenter<UserView>() {
-    private var disposable: Disposable? = null
+    private var disposable = CompositeDisposable()
     override fun onFirstViewAttach() {
-        disposable = gitHubRepo
+        disposable += gitHubRepo
             .getUsers()
-            .filter { it.login == userLogin }
+            .map { it.find { user ->  user.login == userLogin } }
             .subscribe(
-                viewState::showUser,
+                { it?.let { user -> viewState.showUser(user) } },
                 viewState::showError
             )
     }
 
     override fun onDestroy() {
-        disposable = null
+        disposable.clear()
         super.onDestroy()
     }
 }
