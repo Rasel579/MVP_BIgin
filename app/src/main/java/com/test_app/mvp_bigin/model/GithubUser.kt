@@ -1,5 +1,7 @@
 package com.test_app.mvp_bigin.model
 
-data class GithubUser (
-    val login : String
-)
+import java.io.Serializable
+
+data class GithubUser(
+    val login: String
+) : Serializable
