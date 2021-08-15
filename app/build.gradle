@@ -8,7 +8,12 @@ plugins {
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
-
+    buildTypes.each{
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('apikey.properties').newDataInputStream())
+        def apiKey = properties.getProperty("github_apikey", "")
+        it.buildConfigField "String", "GITHUB_DB_APIKEY", apiKey
+    }
     defaultConfig {
         applicationId "com.test_app.mvp_bigin"
         minSdkVersion 21
@@ -25,6 +30,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -35,6 +41,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
