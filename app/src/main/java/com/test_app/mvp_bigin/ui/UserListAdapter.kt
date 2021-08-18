@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.test_app.mvp_bigin.databinding.ItemUserLayoutBinding
-import com.test_app.mvp_bigin.presentation.UserItemListPresenter
+import com.test_app.mvp_bigin.presenters.UserItemListPresenter
 import com.test_app.mvp_bigin.utils.ImageLoader
 import com.test_app.mvp_bigin.views.UserItemView
 

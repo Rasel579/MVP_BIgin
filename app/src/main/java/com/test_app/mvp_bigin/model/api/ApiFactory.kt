@@ -3,6 +3,8 @@ package com.test_app.mvp_bigin.model.api
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -20,6 +22,9 @@ object ApiFactory {
                 writeTimeout(20, TimeUnit.SECONDS)
             }
             .addInterceptor(GithubInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                       level = HttpLoggingInterceptor.Level.BODY
+             })
             .build()
         Retrofit.Builder()
             .baseUrl("https://api.github.com")

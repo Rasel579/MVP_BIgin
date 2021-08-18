@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.test_app.mvp_bigin.databinding.ItemRepoLayotBinding
-import com.test_app.mvp_bigin.presentation.UserPresenter
+import com.test_app.mvp_bigin.presenters.UserPresenter
 import com.test_app.mvp_bigin.views.RepoItemView
 
 class RepoListAdapter(private val presenter: UserPresenter.ReposPresenter) :

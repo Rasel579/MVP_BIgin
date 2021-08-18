@@ -10,9 +10,10 @@ import androidx.core.os.bundleOf
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.test_app.mvp_bigin.databinding.FragmentRepoBinding
-import com.test_app.mvp_bigin.model.GithubRepos
+import com.test_app.mvp_bigin.model.retrofit.GithubRepos
 import com.test_app.mvp_bigin.model.RepositoryFactory
-import com.test_app.mvp_bigin.presentation.RepoPresenter
+import com.test_app.mvp_bigin.model.network.NetworkStatusFactory
+import com.test_app.mvp_bigin.presenters.RepoPresenter
 import com.test_app.mvp_bigin.utils.schedulers.SchedulersFactory
 import com.test_app.mvp_bigin.views.RepoView
 import moxy.MvpAppCompatFragment
@@ -32,7 +33,7 @@ class RepoFragment : MvpAppCompatFragment(), RepoView {
     private val binding : FragmentRepoBinding by viewBinding(CreateMethod.INFLATE)
     private val presenter: RepoPresenter by moxyPresenter {
         RepoPresenter(
-            RepositoryFactory.create(),
+            RepositoryFactory.create(NetworkStatusFactory.create(context)),
             repoUrl,
             SchedulersFactory.create()
         )

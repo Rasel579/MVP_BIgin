@@ -1,4 +1,4 @@
-package com.test_app.mvp_bigin.model
+package com.test_app.mvp_bigin.model.retrofit
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

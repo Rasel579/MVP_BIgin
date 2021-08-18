@@ -12,9 +12,10 @@ import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.test_app.mvp_bigin.App.Navigation.router
 import com.test_app.mvp_bigin.databinding.FragmentItemUserBinding
-import com.test_app.mvp_bigin.model.GithubUser
+import com.test_app.mvp_bigin.model.retrofit.GithubUser
 import com.test_app.mvp_bigin.model.RepositoryFactory
-import com.test_app.mvp_bigin.presentation.UserPresenter
+import com.test_app.mvp_bigin.model.network.NetworkStatusFactory
+import com.test_app.mvp_bigin.presenters.UserPresenter
 import com.test_app.mvp_bigin.utils.ImageLoader
 import com.test_app.mvp_bigin.utils.schedulers.SchedulersFactory
 import com.test_app.mvp_bigin.views.UserView
@@ -38,7 +39,7 @@ class UserFragment : MvpAppCompatFragment(), UserView {
     private val userPresenter by moxyPresenter {
         UserPresenter(
             user,
-            RepositoryFactory.create(),
+            RepositoryFactory.create(NetworkStatusFactory.create(context)),
             SchedulersFactory.create(),
             router
         )

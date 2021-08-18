@@ -1,14 +1,13 @@
-package com.test_app.mvp_bigin.presentation
+package com.test_app.mvp_bigin.presenters
 
 import android.util.Log
 import com.github.terrakok.cicerone.Router
-import com.test_app.mvp_bigin.model.GithubRepos
-import com.test_app.mvp_bigin.model.GithubUser
+import com.test_app.mvp_bigin.model.retrofit.GithubRepos
+import com.test_app.mvp_bigin.model.retrofit.GithubUser
 import com.test_app.mvp_bigin.model.GithubUsersRepo
 import com.test_app.mvp_bigin.model.Mapper
 import com.test_app.mvp_bigin.navigation.RepoScreen
 import com.test_app.mvp_bigin.utils.schedulers.Schedulers
-import com.test_app.mvp_bigin.views.ItemView
 import com.test_app.mvp_bigin.views.RepoItemView
 import com.test_app.mvp_bigin.views.UserView
 import io.reactivex.rxjava3.disposables.CompositeDisposable

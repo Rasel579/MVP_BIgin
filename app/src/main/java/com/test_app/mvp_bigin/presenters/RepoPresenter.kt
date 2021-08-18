@@ -1,4 +1,4 @@
-package com.test_app.mvp_bigin.presentation
+package com.test_app.mvp_bigin.presenters
 
 import com.test_app.mvp_bigin.model.GithubUsersRepo
 import com.test_app.mvp_bigin.utils.schedulers.Schedulers
@@ -22,7 +22,12 @@ class RepoPresenter(
                    viewState.showRepoName(it)
                    viewState.showRepoForks(it)
                    viewState.showRepoDate(it)
-                 },{}
+                 },
+                 viewState::showError
              )
+    }
+
+    override fun onDestroy() {
+        disposable.clear()
     }
 }

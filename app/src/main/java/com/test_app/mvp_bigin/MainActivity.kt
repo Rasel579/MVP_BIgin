@@ -7,8 +7,7 @@ import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.test_app.mvp_bigin.App.Navigation.navigatorHolder
 import com.test_app.mvp_bigin.App.Navigation.router
 import com.test_app.mvp_bigin.databinding.ActivityMainBinding
-import com.test_app.mvp_bigin.presentation.MainPresenter
-import com.test_app.mvp_bigin.ui.BackButtonPressed
+import com.test_app.mvp_bigin.presenters.MainPresenter
 import com.test_app.mvp_bigin.views.MainView
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
@@ -34,13 +33,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         super.onPause()
     }
 
-    override fun onBackPressed() {
-        supportFragmentManager.fragments.forEach {
-            if (it is BackButtonPressed && it.backButtonPressed()) {
-                return
-            }
-          mainPresenter.back()
-        }
-    }
+
 
 }
