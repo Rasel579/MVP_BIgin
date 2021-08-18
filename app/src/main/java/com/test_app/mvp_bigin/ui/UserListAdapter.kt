@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.test_app.mvp_bigin.databinding.ItemUserLayoutBinding
 import com.test_app.mvp_bigin.presentation.UserItemListPresenter
+import com.test_app.mvp_bigin.utils.ImageLoader
 import com.test_app.mvp_bigin.views.UserItemView
 
-class UserListAdapter(private val presenter : UserItemListPresenter) :
+class UserListAdapter(private val presenter: UserItemListPresenter, private val imageLoader: ImageLoader) :
     RecyclerView.Adapter<UserListAdapter.UserItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserItemViewHolder =
         UserItemViewHolder(ItemUserLayoutBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)).apply {
+            parent, false), imageLoader).apply {
                 itemView.setOnClickListener {
                     presenter.itemClickedListener?.invoke(this)
                 }
@@ -24,13 +25,15 @@ class UserListAdapter(private val presenter : UserItemListPresenter) :
 
     override fun getItemCount(): Int = presenter.getCount()
 
-    inner class UserItemViewHolder(val binding: ItemUserLayoutBinding) :
+    inner class UserItemViewHolder(val binding: ItemUserLayoutBinding, private val imageLoader: ImageLoader) :
         RecyclerView.ViewHolder(binding.root), UserItemView{
         override fun setLogin(login: String) {
             binding.userLogin.text = login
         }
 
+        override fun setAvatar(url: String) {
+           imageLoader.load(url, binding.avatarImage)
+        }
         override var pos = -1
-
     }
 }

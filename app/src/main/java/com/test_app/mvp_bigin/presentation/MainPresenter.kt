@@ -7,8 +7,7 @@ import moxy.MvpPresenter
 
 class MainPresenter(
     private val router: Router
-) :
-    MvpPresenter<MainView>() {
+) : MvpPresenter<MainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         router.newRootScreen(UsersScreen.create())

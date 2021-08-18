@@ -6,7 +6,6 @@ import com.github.terrakok.cicerone.Router
 
 class App : Application() {
     companion object Navigation {
-        lateinit var instance : App
         /** Before when we'll used Dagger lib by DI**/
         private val cicerone : Cicerone<Router> by lazy {
             Cicerone.create()

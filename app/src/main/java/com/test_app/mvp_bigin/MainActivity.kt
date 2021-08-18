@@ -1,31 +1,27 @@
 package com.test_app.mvp_bigin
 
 import android.os.Bundle
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.test_app.mvp_bigin.App.Navigation.navigatorHolder
 import com.test_app.mvp_bigin.App.Navigation.router
 import com.test_app.mvp_bigin.databinding.ActivityMainBinding
 import com.test_app.mvp_bigin.presentation.MainPresenter
 import com.test_app.mvp_bigin.ui.BackButtonPressed
-import com.test_app.mvp_bigin.utils.Creation
 import com.test_app.mvp_bigin.views.MainView
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 
-/**
- * For creating an instance of moxyPresenter need to MainActivity instanced of MvpAppCompatActivity()
- **/
+/**For creating an instance of moxyPresenter need to MainActivity instanced of MvpAppCompatActivity()**/
 class MainActivity : MvpAppCompatActivity(), MainView {
-    private var binding: ActivityMainBinding? = null
+    private val binding : ActivityMainBinding by viewBinding(CreateMethod.INFLATE)
     private val navigator = AppNavigator(this, R.id.container)
     private val mainPresenter by moxyPresenter { MainPresenter(router) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
-        val creation = Creation()
-        creation.exec()
+        setContentView(binding.root)
     }
 
     override fun onResumeFragments() {
@@ -43,7 +39,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             if (it is BackButtonPressed && it.backButtonPressed()) {
                 return
             }
-            mainPresenter.back()
+          mainPresenter.back()
         }
     }
 

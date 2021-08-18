@@ -1,15 +1,15 @@
 package com.test_app.mvp_bigin.views
 
-import com.test_app.mvp_bigin.model.GithubUser
+import com.test_app.mvp_bigin.model.GithubRepos
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface UserView : MvpView {
-    fun showUser(githubUser: GithubUser)
-    fun showAvatar(githubUser: GithubUser)
+interface RepoView : MvpView {
+    fun showRepoName(repo: GithubRepos)
+    fun showRepoForks(repo: GithubRepos)
+    fun showRepoDate(repo: GithubRepos)
+    fun showRepoLanguage(repo: GithubRepos)
     fun showError(error: Throwable)
-    fun updateRepose()
-    fun init()
 }
