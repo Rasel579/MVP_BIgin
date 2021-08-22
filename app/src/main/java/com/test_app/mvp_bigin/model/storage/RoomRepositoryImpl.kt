@@ -4,8 +4,12 @@ import com.test_app.mvp_bigin.model.retrofit.GithubRepos
 import com.test_app.mvp_bigin.model.retrofit.GithubUser
 import com.test_app.mvp_bigin.utils.schedulers.Schedulers
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class RoomRepositoryImpl(private val db: RoomDB, private val schedulers: Schedulers) : Storage {
+class RoomRepositoryImpl @Inject constructor(
+    private val db: RoomDB,
+    private val schedulers: Schedulers
+) : Storage {
     override fun insertUsers(users: List<GithubUser>) {
         val roomUsers = users.map { user ->
             RoomGithubUser(user.id, user.login, user.avatarUrl, user.reposUrl)

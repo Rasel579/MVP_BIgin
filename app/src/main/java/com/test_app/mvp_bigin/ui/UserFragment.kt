@@ -10,20 +10,21 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.test_app.mvp_bigin.App.Navigation.router
+import com.github.terrakok.cicerone.Router
+import com.test_app.mvp_bigin.R
 import com.test_app.mvp_bigin.databinding.FragmentItemUserBinding
+import com.test_app.mvp_bigin.model.GithubUsersRepo
 import com.test_app.mvp_bigin.model.retrofit.GithubUser
-import com.test_app.mvp_bigin.model.RepositoryFactory
-import com.test_app.mvp_bigin.model.network.NetworkStatusFactory
 import com.test_app.mvp_bigin.presenters.UserPresenter
+import com.test_app.mvp_bigin.ui.abs.AbsFragment
 import com.test_app.mvp_bigin.utils.ImageLoader
-import com.test_app.mvp_bigin.utils.schedulers.SchedulersFactory
+import com.test_app.mvp_bigin.utils.schedulers.Schedulers
 import com.test_app.mvp_bigin.views.UserView
-import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
 
-class UserFragment : MvpAppCompatFragment(), UserView {
+class UserFragment : AbsFragment(R.layout.fragment_users_list), UserView {
     companion object {
         private const val ARGS_USER = "ARG_USER"
         fun newInstance(githubUserLogin: String?) = UserFragment().apply {
@@ -31,7 +32,17 @@ class UserFragment : MvpAppCompatFragment(), UserView {
         }
     }
 
-    private val imageLoader = ImageLoader
+    @Inject
+    lateinit var repository: GithubUsersRepo
+
+    @Inject
+    lateinit var schedulers: Schedulers
+
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
     private val binding by viewBinding<FragmentItemUserBinding>(CreateMethod.INFLATE)
     private val user by lazy {
         arguments?.getString(ARGS_USER).orEmpty()
@@ -39,8 +50,8 @@ class UserFragment : MvpAppCompatFragment(), UserView {
     private val userPresenter by moxyPresenter {
         UserPresenter(
             user,
-            RepositoryFactory.create(NetworkStatusFactory.create(context)),
-            SchedulersFactory.create(),
+            repository,
+            schedulers,
             router
         )
     }

@@ -2,10 +2,10 @@ package com.test_app.mvp_bigin.presenters
 
 import android.util.Log
 import com.github.terrakok.cicerone.Router
-import com.test_app.mvp_bigin.model.retrofit.GithubRepos
-import com.test_app.mvp_bigin.model.retrofit.GithubUser
 import com.test_app.mvp_bigin.model.GithubUsersRepo
 import com.test_app.mvp_bigin.model.Mapper
+import com.test_app.mvp_bigin.model.retrofit.GithubRepos
+import com.test_app.mvp_bigin.model.retrofit.GithubUser
 import com.test_app.mvp_bigin.navigation.RepoScreen
 import com.test_app.mvp_bigin.utils.schedulers.Schedulers
 import com.test_app.mvp_bigin.views.RepoItemView
@@ -54,12 +54,12 @@ class UserPresenter(
                 },
                 viewState::showError
             )
-        reposPresenter.itemClickedListener = {view ->
+        reposPresenter.itemClickedListener = { view ->
             router.navigateTo(RepoScreen(repos[view.pos]).create())
         }
     }
 
-    class ReposPresenter() : ItemListPresenter<RepoItemView>{
+    class ReposPresenter() : ItemListPresenter<RepoItemView> {
         val repos = mutableListOf<GithubRepos>()
 
         override fun bindView(view: RepoItemView) {
@@ -69,6 +69,7 @@ class UserPresenter(
             view.setDate(repo.date)
             Log.e("repos", repo.toString())
         }
+
         override fun getCount(): Int = repos.size
         override var itemClickedListener: ((RepoItemView) -> Unit)? = null
 

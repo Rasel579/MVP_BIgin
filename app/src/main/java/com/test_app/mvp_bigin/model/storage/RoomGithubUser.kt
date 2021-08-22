@@ -1,6 +1,5 @@
 package com.test_app.mvp_bigin.model.storage
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey

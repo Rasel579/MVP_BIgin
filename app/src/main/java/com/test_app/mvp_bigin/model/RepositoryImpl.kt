@@ -7,8 +7,9 @@ import com.test_app.mvp_bigin.model.retrofit.GithubUser
 import com.test_app.mvp_bigin.model.storage.Storage
 import com.test_app.mvp_bigin.utils.schedulers.Schedulers
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class RepositoryImpl(
+class RepositoryImpl @Inject constructor(
     private val cloud: CloudSource,
     private val storage: Storage,
     private val network: NetworkStatus,

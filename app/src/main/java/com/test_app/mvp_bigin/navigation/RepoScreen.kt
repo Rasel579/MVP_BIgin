@@ -6,5 +6,5 @@ import com.test_app.mvp_bigin.model.retrofit.GithubRepos
 import com.test_app.mvp_bigin.ui.RepoFragment
 
 class RepoScreen(private val repo: GithubRepos) {
-    fun create() : Screen = FragmentScreen{ RepoFragment.newInstance(repo.url)}
+    fun create(): Screen = FragmentScreen { RepoFragment.newInstance(repo.url) }
 }
