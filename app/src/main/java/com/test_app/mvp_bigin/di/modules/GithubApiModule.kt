@@ -28,9 +28,7 @@ class GithubApiModule {
                 writeTimeout(20, TimeUnit.SECONDS)
             }
             .addInterceptor(GithubInterceptor)
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            }).build()
+            .build()
         )
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create(gson))

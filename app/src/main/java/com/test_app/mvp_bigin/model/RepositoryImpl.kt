@@ -4,14 +4,14 @@ import com.test_app.mvp_bigin.model.network.NetworkStatus
 import com.test_app.mvp_bigin.model.retrofit.CloudSource
 import com.test_app.mvp_bigin.model.retrofit.GithubRepos
 import com.test_app.mvp_bigin.model.retrofit.GithubUser
-import com.test_app.mvp_bigin.model.storage.Storage
+import com.test_app.mvp_bigin.model.storage.DataSource
 import com.test_app.mvp_bigin.utils.schedulers.Schedulers
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val cloud: CloudSource,
-    private val storage: Storage,
+    private val dataSource: DataSource,
     private val network: NetworkStatus,
     private val schedulers: Schedulers
 ) : GithubUsersRepo {
@@ -20,11 +20,11 @@ class RepositoryImpl @Inject constructor(
         .flatMap { isOnline ->
             if (isOnline) {
                 cloud.getUsers().map { users ->
-                    storage.insertUsers(users)
+                    dataSource.insertUsers(users)
                     users
                 }
             } else {
-                storage.getUsers()
+                dataSource.getUsers()
             }
         }.subscribeOn(schedulers.background())
 
@@ -33,11 +33,11 @@ class RepositoryImpl @Inject constructor(
         .flatMap { isOnline ->
             if (isOnline) {
                 cloud.getRepos(url).map { repos ->
-                    storage.insertGithubRepos(repos, url)
+                    dataSource.insertGithubRepos(repos, url)
                     repos
                 }
             } else {
-                storage.getRepos(url)
+                dataSource.getRepos(url)
             }
         }.subscribeOn(schedulers.background())
 
@@ -47,7 +47,7 @@ class RepositoryImpl @Inject constructor(
             if (isOnline) {
                 cloud.getRepo(url)
             } else {
-                storage.getRepo(url)
+                dataSource.getRepo(url)
             }
         }.subscribeOn(schedulers.background())
 }

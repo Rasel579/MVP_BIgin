@@ -7,7 +7,7 @@ import com.test_app.mvp_bigin.model.network.NetworkStatus
 import com.test_app.mvp_bigin.model.retrofit.CloudSource
 import com.test_app.mvp_bigin.model.retrofit.RetrofitGithubUsersRepoImpl
 import com.test_app.mvp_bigin.model.storage.RoomRepositoryImpl
-import com.test_app.mvp_bigin.model.storage.Storage
+import com.test_app.mvp_bigin.model.storage.DataSource
 import com.test_app.mvp_bigin.ui.MainActivity
 import com.test_app.mvp_bigin.ui.RepoFragment
 import com.test_app.mvp_bigin.ui.UserFragment
@@ -33,23 +33,19 @@ interface GithubModule {
     @ContributesAndroidInjector
     fun bindRepoFragment(): RepoFragment
 
-    @Singleton
+
     @Binds
     fun bindRepository(repository: RepositoryImpl): GithubUsersRepo
 
-    @Singleton
     @Binds
     fun bindCloudStorage(cloud: RetrofitGithubUsersRepoImpl): CloudSource
 
-    @Singleton
     @Binds
-    fun bindCacheStorage(storage: RoomRepositoryImpl): Storage
+    fun bindCacheStorage(storage: RoomRepositoryImpl): DataSource
 
-    @Singleton
     @Binds
     fun bindNetworkStatus(network: AndroidNetworkStatus): NetworkStatus
 
-    @Singleton
     @Binds
     fun bindScheduler(schedulers: DefaultSchedulers): Schedulers
 

@@ -5,7 +5,6 @@ import com.test_app.mvp_bigin.di.DaggerApplicationComponent
 import com.test_app.mvp_bigin.utils.ImageLoader
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import io.reactivex.plugins.RxJavaPlugins
 
 class MVPApp : DaggerApplication() {
     override fun applicationInjector(): AndroidInjector<MVPApp> =
@@ -20,8 +19,5 @@ class MVPApp : DaggerApplication() {
             }
             .build()
 
-    override fun onCreate() {
-        super.onCreate()
-        RxJavaPlugins.setErrorHandler {}
-    }
+
 }

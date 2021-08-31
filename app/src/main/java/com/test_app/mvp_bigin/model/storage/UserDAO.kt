@@ -1,14 +1,15 @@
 package com.test_app.mvp_bigin.model.storage
 
 import androidx.room.*
+import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface UserDAO {
     @Query("SELECT * FROM RoomGithubUser")
-    fun getAll(): List<RoomGithubUser>
+    fun getAll(): Single<List<RoomGithubUser>>
 
     @Query("SELECT * FROM RoomGithubUser WHERE login = :login LIMIT 1")
-    fun findByLogin(login: String): RoomGithubUser?
+    fun findByLogin(login: String): Single<RoomGithubUser?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: RoomGithubUser)

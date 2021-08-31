@@ -9,7 +9,7 @@ import javax.inject.Inject
 class RoomRepositoryImpl @Inject constructor(
     private val db: RoomDB,
     private val schedulers: Schedulers
-) : Storage {
+) : DataSource {
     override fun insertUsers(users: List<GithubUser>) {
         val roomUsers = users.map { user ->
             RoomGithubUser(user.id, user.login, user.avatarUrl, user.reposUrl)
@@ -32,23 +32,40 @@ class RoomRepositoryImpl @Inject constructor(
         db.repoDao.insert(roomRepos)
     }
 
-    override fun getUsers(): Single<List<GithubUser>> = Single.fromCallable {
-        db.userDao.getAll().map {
-            GithubUser(it.id, it.login, it.avatarUrl, it.reposUrl)
+    override fun getUsers(): Single<List<GithubUser>> = db.userDao.getAll().map {
+        it.map {
+            GithubUser(
+                it.id,
+                it.login,
+                it.avatarUrl,
+                it.reposUrl
+            )
         }
     }.subscribeOn(schedulers.background())
 
-    override fun getRepos(url: String?): Single<List<GithubRepos>> = Single.fromCallable {
-        db.repoDao.findForUserRepo(url).map { repo ->
-            GithubRepos(repo.id, repo.name, repo.date, repo.language, repo.forksCount, repo.url)
+    override fun getRepos(url: String?): Single<List<GithubRepos>> = db.repoDao.getAll().map { it ->
+        it.map {
+            GithubRepos(
+                it.id,
+                it.name,
+                it.date,
+                it.language,
+                it.forksCount,
+                it.url
+            )
         }
-    }
+    }.subscribeOn(schedulers.background())
 
-    override fun getRepo(url: String?): Single<GithubRepos> = Single.fromCallable {
-        db.repoDao.findRepo(url).let {
-            GithubRepos(it.id, it.name, it.date, it.language, it.forksCount, it.url)
-        }
-    }
+    override fun getRepo(url: String?): Single<GithubRepos> = db.repoDao.findRepo(url).map {
+        GithubRepos(
+            it.id,
+            it.name,
+            it.date,
+            it.language,
+            it.forksCount,
+            it.url
+        )
+    }.subscribeOn(schedulers.background())
 }
 
 
