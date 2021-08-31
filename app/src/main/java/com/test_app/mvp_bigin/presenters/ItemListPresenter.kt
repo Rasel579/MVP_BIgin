@@ -1,4 +1,4 @@
-package com.test_app.mvp_bigin.presentation
+package com.test_app.mvp_bigin.presenters
 
 import com.test_app.mvp_bigin.views.ItemView
 import com.test_app.mvp_bigin.views.UserItemView

@@ -1,8 +1,8 @@
-package com.test_app.mvp_bigin.presentation
+package com.test_app.mvp_bigin.presenters
 
 import com.github.terrakok.cicerone.Router
-import com.test_app.mvp_bigin.model.GithubUser
 import com.test_app.mvp_bigin.model.GithubUsersRepo
+import com.test_app.mvp_bigin.model.retrofit.GithubUser
 import com.test_app.mvp_bigin.navigation.UserScreen
 import com.test_app.mvp_bigin.utils.schedulers.Schedulers
 import com.test_app.mvp_bigin.views.UserItemView
@@ -58,10 +58,6 @@ class UsersPresenter(
         }
     }
 
-    fun backPressed(): Boolean {
-        router.exit()
-        return true
-    }
 
     override fun onDestroy() {
         disposable.clear()
